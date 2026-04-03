@@ -1,11 +1,22 @@
 import { useState } from 'react';
 
 export default function Card() {
+	const [itemQuantity, setItemQuantity] = useState(0);
+
+	function handleClick(e) {
+		const btnName = e.target.textContent;
+
+		btnName === 'Decrement'
+			? setItemQuantity((n) => (n === 0 ? 0 : n - 1))
+			: setItemQuantity((n) => n + 1);
+	}
+
 	return (
 		<div>
 			<ProductTitle />
 			<ProductImage />
-			<Quantity />
+			<Quantity quantity={itemQuantity} />
+			<Button name='Add to Cart' onClick={handleClick} />
 		</div>
 	);
 }
@@ -18,22 +29,12 @@ function ProductImage({ url }) {
 	return <img src={url} alt='' />;
 }
 
-function Quantity() {
-	const [itemNumber, setItemNumber] = useState(0);
-
-	function handleClick(e) {
-		const btnName = e.target.textContent;
-
-		btnName === 'Decrement'
-			? setItemNumber((n) => (n === 0 ? 0 : n - 1))
-			: setItemNumber((n) => n + 1);
-	}
-
+function Quantity({ quantity, onClick }) {
 	return (
 		<>
-			<input type='number' value={itemNumber} />
-			<Button name='Decrement' onClick={handleClick} />
-			<Button name='Increment' onClick={handleClick} />
+			<input type='number' value={quantity} />
+			<Button name='Decrement' onClick={onClick} />
+			<Button name='Increment' onClick={onClick} />
 		</>
 	);
 }
