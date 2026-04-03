@@ -3,13 +3,22 @@ import { useState } from 'react';
 export default function Card() {
 	return (
 		<div>
-			<img src='' alt='' />
-			<Items />
+			<ProductTitle />
+			<ProductImage />
+			<Quantity />
 		</div>
 	);
 }
 
-function Items() {
+function ProductTitle({ name }) {
+	return <h1>{name}</h1>;
+}
+
+function ProductImage({ url }) {
+	return <img src={url} alt='' />;
+}
+
+function Quantity() {
 	const [itemNumber, setItemNumber] = useState(0);
 
 	function handleClick(e) {
