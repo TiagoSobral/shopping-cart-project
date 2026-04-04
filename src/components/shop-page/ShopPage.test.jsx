@@ -9,7 +9,7 @@ describe('Product Quantity Buttons', () => {
 
 		render(<Card />);
 
-		const input = screen.getByRole('spinbutton');
+		const input = screen.getByRole('textbox');
 		const increment = screen.getByText('Increment');
 
 		await user.click(increment);
@@ -23,12 +23,24 @@ describe('Product Quantity Buttons', () => {
 
 		render(<Card />);
 
-		const input = screen.getByRole('spinbutton');
+		const input = screen.getByRole('textbox');
 		const decrement = screen.getByText('Decrement');
 
 		await user.click(decrement);
 		await user.click(decrement);
 
 		expect(Number(input.value)).toEqual(0);
+	});
+
+	it('User changes item quantity manually', async () => {
+		const user = userEvent.setup();
+
+		render(<Card />);
+
+		const input = screen.getByRole('textbox');
+
+		await user.type(input, '2');
+
+		expect(Number(input.value)).toEqual(2);
 	});
 });

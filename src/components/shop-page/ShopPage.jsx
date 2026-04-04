@@ -11,12 +11,22 @@ export default function Card() {
 			: setItemQuantity((n) => n + 1);
 	}
 
+	function handleChange(e) {
+		const quantity = e.target.value;
+
+		setItemQuantity(Number(quantity));
+	}
+
 	return (
 		<div>
 			<ProductTitle />
 			<ProductImage />
-			<Quantity quantity={itemQuantity} />
-			<Button name='Add to Cart' onClick={handleClick} />
+			<Quantity
+				quantity={itemQuantity}
+				onClick={handleClick}
+				onChange={handleChange}
+			/>
+			<Button name='Add to Cart' />
 		</div>
 	);
 }
@@ -29,10 +39,10 @@ function ProductImage({ url }) {
 	return <img src={url} alt='' />;
 }
 
-function Quantity({ quantity, onClick }) {
+function Quantity({ quantity, onClick, onChange }) {
 	return (
 		<>
-			<input type='number' value={quantity} />
+			<input type='tel' value={quantity} onChange={onChange} />
 			<Button name='Decrement' onClick={onClick} />
 			<Button name='Increment' onClick={onClick} />
 		</>
