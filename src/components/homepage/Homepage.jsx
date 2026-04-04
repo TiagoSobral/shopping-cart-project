@@ -1,4 +1,4 @@
-import Banner from './Banner';
+import Banner from '../banner/Banner';
 import NavigationBar from '../navigation-bar/NavigationBar';
 import background from '../../assets/background-brush.jpg';
 
