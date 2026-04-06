@@ -1,6 +1,6 @@
 import styles from './NavigationBar.module.css';
 
-function NavigationBar() {
+function NavigationBar({ itemsQty }) {
 	return (
 		<nav className={styles.navigationBanner}>
 			<ul className={styles.list}>
@@ -16,8 +16,8 @@ function NavigationBar() {
 					</a>
 				</li>
 				<li className='cartLink'>
-					<button className={styles.btn} data-testid='navLink'>
-						CART
+					<button className={`${styles.btn} ${styles.cart}`} data-testid='cartLink'>
+						{itemsQty > 0 ? itemsQty : 'CART'}
 					</button>
 				</li>
 			</ul>

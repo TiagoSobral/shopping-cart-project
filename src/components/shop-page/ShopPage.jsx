@@ -1,6 +1,21 @@
+import styles from './ShopPage.module.css';
+import NavigationBar from '../navigation-bar/NavigationBar.jsx';
+import Banner from '../banner/Banner.jsx';
 import { useState } from 'react';
 
-export default function Card() {
+export default function ShopPage() {
+	const [cartQty, setCartQty] = useState(0);
+
+	return (
+		<>
+			<Banner />
+			<NavigationBar itemsQty={cartQty} />
+			<Card setCartQty={setCartQty} />
+		</>
+	);
+}
+
+function Card({ setCartQty }) {
 	const [itemQuantity, setItemQuantity] = useState(0);
 
 	function handleClick(e) {
@@ -17,16 +32,24 @@ export default function Card() {
 		setItemQuantity(Number(quantity));
 	}
 
+	function handleAddCart() {
+		setCartQty(itemQuantity);
+	}
+
 	return (
-		<div>
-			<ProductTitle />
+		<div className={styles.card}>
+			<ProductTitle name='Brush' />
 			<ProductImage />
 			<Quantity
 				quantity={itemQuantity}
 				onClick={handleClick}
 				onChange={handleChange}
 			/>
-			<Button name='Add to Cart' />
+			<Button
+				name='Add to Cart'
+				className={styles.InputNCartBtn}
+				onClick={handleAddCart}
+			/>
 		</div>
 	);
 }
@@ -42,13 +65,22 @@ function ProductImage({ url }) {
 function Quantity({ quantity, onClick, onChange }) {
 	return (
 		<>
-			<input type='tel' value={quantity} onChange={onChange} />
+			<input
+				type='tel'
+				className={styles.InputNCartBtn}
+				value={quantity}
+				onChange={onChange}
+			/>
 			<Button name='Decrement' onClick={onClick} />
 			<Button name='Increment' onClick={onClick} />
 		</>
 	);
 }
 
-function Button({ name, onClick }) {
-	return <button onClick={onClick}>{name}</button>;
+function Button({ name, className = name, onClick }) {
+	return (
+		<button className={className} onClick={onClick}>
+			{name}
+		</button>
+	);
 }

@@ -1,7 +1,9 @@
 .navigationBanner {
 	box-shadow: 0rem 1rem 0.5rem -0.7rem rgba(0, 0, 0, 0.079);
-	padding: 1rem 3rem;
+	padding: 1rem;
 	text-align: center;
+	display: flex;
+	justify-content: center;
 }
 
 .noLinkAppearance {
@@ -14,9 +16,9 @@
 	font-size: 1.5rem;
 	font-weight: 600;
 	text-align: center;
-	display: flex;
-	justify-content: space-between;
-	gap: 2rem;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	width: 100%;
 }
 
 .paragraph {
@@ -34,5 +36,4 @@
 	font-size: 1rem;
 	font-family: 'Times New Roman', Times, serif;
 	font-weight: 600;
-	letter-spacing: 0.05rem;
 }
