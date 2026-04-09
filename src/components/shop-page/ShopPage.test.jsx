@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getByRole, getByText, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Card from './ShopPage';
 import ShopPage from './ShopPage';
@@ -11,7 +11,7 @@ describe('Product Quantity Buttons', () => {
 		render(<Card />);
 
 		const input = screen.getByRole('textbox');
-		const increment = screen.getByText('Increment');
+		const increment = screen.getByText('+');
 
 		await user.click(increment);
 		await user.click(increment);
@@ -19,13 +19,13 @@ describe('Product Quantity Buttons', () => {
 		expect(Number(input.value)).toEqual(2);
 	});
 
-	it('Increment item quantity', async () => {
+	it('Decrement item quantity', async () => {
 		const user = userEvent.setup();
 
 		render(<Card />);
 
 		const input = screen.getByRole('textbox');
-		const decrement = screen.getByText('Decrement');
+		const decrement = screen.getByText('-');
 
 		await user.click(decrement);
 		await user.click(decrement);
@@ -51,7 +51,7 @@ describe('Product Quantity Buttons', () => {
 		render(<ShopPage />);
 
 		const addCart = screen.getByRole('button', { name: /Add to Cart/i });
-		const increment = screen.getByText('Increment');
+		const increment = screen.getByText('+');
 		const cart = screen.getByTestId('cartLink');
 
 		await user.click(increment);
