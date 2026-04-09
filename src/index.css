@@ -1,0 +1,35 @@
+@font-face {
+	font-family: 'BebasNeue'; /*MAIN FONT*/
+	src:
+		url('./assets/font/BebasNeue-Regular.woff2') format('woff2'),
+		url('./assets/font/BebasNeue-Regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: auto;
+}
+
+#root,
+button,
+input {
+	font-family: 'BebasNeue', sans-serif;
+	letter-spacing: 0.1rem;
+}
+
+body {
+	margin: 0;
+}
+
+h1 {
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+/* img {
+	width: 200px;
+	height: 200px;
+} */
