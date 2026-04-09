@@ -8,10 +8,24 @@ export default function ShopPage() {
 
 	return (
 		<>
-			<Banner />
-			<NavigationBar itemsQty={cartQty} />
-			<Card setCartQty={setCartQty} />
+			<header>
+				<Banner />
+				<NavigationBar itemsQty={cartQty} />
+			</header>
+			<main>
+				<Cards setCartQty={setCartQty} />
+			</main>
 		</>
+	);
+}
+
+function Cards({ setCartQty }) {
+	return (
+		<div className={styles.cards}>
+			<Card setCartQty={setCartQty} />
+			<Card setCartQty={setCartQty} />
+			<Card setCartQty={setCartQty} />
+		</div>
 	);
 }
 
@@ -55,7 +69,9 @@ function Card({ setCartQty }) {
 }
 
 function ProductTitle({ name }) {
-	return <h1>{name}</h1>;
+	return (
+		<h1 className={`${styles.cardTitle} ${styles.InputNCartBtn}`}>{name}</h1>
+	);
 }
 
 function ProductImage({ url }) {
@@ -67,12 +83,12 @@ function Quantity({ quantity, onClick, onChange }) {
 		<>
 			<input
 				type='tel'
-				className={styles.InputNCartBtn}
+				className={`${styles.InputNCartBtn} ${styles.cardTitle}`}
 				value={quantity}
 				onChange={onChange}
 			/>
-			<Button name='Decrement' onClick={onClick} />
-			<Button name='Increment' onClick={onClick} />
+			<Button name='-' onClick={onClick} />
+			<Button name='+' onClick={onClick} />
 		</>
 	);
 }
