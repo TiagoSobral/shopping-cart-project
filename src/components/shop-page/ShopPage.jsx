@@ -2,34 +2,35 @@ import styles from './ShopPage.module.css';
 import NavigationBar from '../navigation-bar/NavigationBar.jsx';
 import Banner from '../banner/Banner.jsx';
 import { useState } from 'react';
+import handleClick from '../../helper-functions/helper-functions.jsx';
 
 export default function ShopPage() {
-	const [cartQty, setCartQty] = useState(0);
+	const [cartItems, setCartItems] = useState(0);
 
 	return (
 		<>
 			<header>
 				<Banner />
-				<NavigationBar itemsQty={cartQty} />
+				<NavigationBar itemsQty={cartItems} />
 			</header>
 			<main>
-				<Cards setCartQty={setCartQty} />
+				<Cards setCartItems={setCartItems} />
 			</main>
 		</>
 	);
 }
 
-function Cards({ setCartQty }) {
+function Cards({ setCartItems }) {
 	return (
 		<div className={styles.cards}>
-			<Card setCartQty={setCartQty} />
-			<Card setCartQty={setCartQty} />
-			<Card setCartQty={setCartQty} />
+			<Card setCartItems={setCartItems} />
+			<Card setCartItems={setCartItems} />
+			<Card setCartItems={setCartItems} />
 		</div>
 	);
 }
 
-function Card({ setCartQty }) {
+function Card({ setCartItems }) {
 	const [itemQuantity, setItemQuantity] = useState(0);
 
 	function handleChange(e) {
@@ -39,7 +40,7 @@ function Card({ setCartQty }) {
 	}
 
 	function handleAddCart() {
-		setCartQty(itemQuantity);
+		setCartItems(itemQuantity);
 	}
 
 	return (
@@ -92,15 +93,4 @@ function Button({ name, className = name, setItemQuantity, onClick }) {
 			{name}
 		</button>
 	);
-}
-
-// increment and decrement function
-
-function handleClick(e, callback) {
-	const btnName = e.target.textContent;
-	console.log(btnName);
-
-	btnName === '-'
-		? callback((n) => (n === 0 ? 0 : n - 1))
-		: callback((n) => n + 1);
 }
