@@ -32,14 +32,6 @@ function Cards({ setCartQty }) {
 function Card({ setCartQty }) {
 	const [itemQuantity, setItemQuantity] = useState(0);
 
-	function handleClick(e) {
-		const btnName = e.target.textContent;
-
-		btnName === 'Decrement'
-			? setItemQuantity((n) => (n === 0 ? 0 : n - 1))
-			: setItemQuantity((n) => n + 1);
-	}
-
 	function handleChange(e) {
 		const quantity = e.target.value;
 
@@ -56,6 +48,7 @@ function Card({ setCartQty }) {
 			<ProductImage />
 			<Quantity
 				quantity={itemQuantity}
+				setItemQuantity={setItemQuantity}
 				onClick={handleClick}
 				onChange={handleChange}
 			/>
@@ -78,7 +71,7 @@ function ProductImage({ url }) {
 	return <img src={url} alt='' />;
 }
 
-function Quantity({ quantity, onClick, onChange }) {
+export function Quantity({ quantity, setItemQuantity, onClick, onChange }) {
 	return (
 		<>
 			<input
@@ -87,16 +80,27 @@ function Quantity({ quantity, onClick, onChange }) {
 				value={quantity}
 				onChange={onChange}
 			/>
-			<Button name='-' onClick={onClick} />
-			<Button name='+' onClick={onClick} />
+			<Button name='-' onClick={onClick} setItemQuantity={setItemQuantity} />
+			<Button name='+' onClick={onClick} setItemQuantity={setItemQuantity} />
 		</>
 	);
 }
 
-function Button({ name, className = name, onClick }) {
+function Button({ name, className = name, setItemQuantity, onClick }) {
 	return (
-		<button className={className} onClick={onClick}>
+		<button className={className} onClick={(e) => onClick(e, setItemQuantity)}>
 			{name}
 		</button>
 	);
+}
+
+// increment and decrement function
+
+function handleClick(e, callback) {
+	const btnName = e.target.textContent;
+	console.log(btnName);
+
+	btnName === '-'
+		? callback((n) => (n === 0 ? 0 : n - 1))
+		: callback((n) => n + 1);
 }
