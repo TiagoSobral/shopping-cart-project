@@ -1,17 +1,15 @@
 import styles from './ShopPage.module.css';
-import NavigationBar from '../navigation-bar/NavigationBar.jsx';
 import Banner from '../banner/Banner.jsx';
-import { useState } from 'react';
+import NavigationBar from '../navigation-bar/NavigationBar.jsx';
 import handleClick from '../../helper-functions/helper-functions.jsx';
+import { useState } from 'react';
 
-export default function ShopPage() {
-	const [cartItems, setCartItems] = useState(0);
-
+export default function ShopPage({ cartItems, setCartItems, setPage }) {
 	return (
 		<>
 			<header>
 				<Banner />
-				<NavigationBar itemsQty={cartItems} />
+				<NavigationBar itemsQty={cartItems} setPage={setPage} />
 			</header>
 			<main>
 				<Cards setCartItems={setCartItems} />

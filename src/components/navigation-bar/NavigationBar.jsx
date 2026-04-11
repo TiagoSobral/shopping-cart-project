@@ -1,11 +1,15 @@
 import styles from './NavigationBar.module.css';
 
-function NavigationBar({ itemsQty }) {
+function NavigationBar({ itemsQty, setPage }) {
 	return (
 		<nav className={styles.navigationBanner}>
 			<ul className={styles.list}>
 				<li className='products'>
-					<button className={styles.btn} data-testid='navLink'>
+					<button
+						className={styles.btn}
+						data-testid='navLink'
+						onClick={() => setPage('ShopPage')}
+					>
 						PRODUCTS
 					</button>
 				</li>
@@ -16,7 +20,11 @@ function NavigationBar({ itemsQty }) {
 					</a>
 				</li>
 				<li className='cartLink'>
-					<button className={`${styles.btn} ${styles.cart}`} data-testid='cartLink'>
+					<button
+						className={`${styles.btn} ${styles.cart}`}
+						data-testid='cartLink'
+						onClick={() => setPage('CartPage')}
+					>
 						{itemsQty > 0 ? itemsQty : 'CART'}
 					</button>
 				</li>
