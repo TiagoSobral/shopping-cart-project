@@ -2,6 +2,7 @@ import handleClick from '../../helper-functions/helper-functions';
 import Banner from '../banner/Banner';
 import NavigationBar from '../navigation-bar/NavigationBar';
 import { Quantity } from '../shop-page/ShopPage';
+import styles from './CartPage.module.css';
 
 export default function CartPage({ itemsCart, setItemQuantity }) {
 	return (
@@ -10,7 +11,7 @@ export default function CartPage({ itemsCart, setItemQuantity }) {
 				<Banner />
 				<NavigationBar />
 			</header>
-			<main>
+			<main className={styles.cart}>
 				<Cart items={itemsCart} setItemQuantity={setItemQuantity} />
 			</main>
 		</>
@@ -30,7 +31,7 @@ function Cart({ items, setItemQuantity }) {
 
 function Items({ items, setItemQuantity }) {
 	return (
-		<ul>
+		<ul className={styles.list}>
 			{items.map((item) => (
 				<li>
 					<Item item={item} setItemQuantity={setItemQuantity} />
@@ -41,14 +42,16 @@ function Items({ items, setItemQuantity }) {
 }
 
 function Item({ item, setItemQuantity }) {
+	const price = item.price * item.quantity;
+
 	return (
-		<ul>
+		<ul className={styles.list}>
 			<li>
 				<img src={item.src} />
 			</li>
 			<li>{item.name}</li>
 			<li>{item.description}</li>
-			<li>{item.price}</li>
+			<li>{price}$</li>
 			<li>
 				<Quantity
 					quantity={item.quantity}

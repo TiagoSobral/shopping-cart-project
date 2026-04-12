@@ -79,8 +79,8 @@ export function Quantity({ quantity, setItemQuantity, onClick, onChange }) {
 				value={quantity}
 				onChange={onChange}
 			/>
-			<Button name='-' onClick={onClick} setItemQuantity={setItemQuantity} />
 			<Button name='+' onClick={onClick} setItemQuantity={setItemQuantity} />
+			<Button name='-' onClick={onClick} setItemQuantity={setItemQuantity} />
 		</>
 	);
 }
