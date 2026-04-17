@@ -1,93 +1,66 @@
 import styles from './ShopPage.module.css';
-import Banner from '../banner/Banner.jsx';
-import NavigationBar from '../navigation-bar/NavigationBar.jsx';
-import handleClick from '../../helper-functions/helper-functions.jsx';
-import { useState } from 'react';
 
-export default function ShopPage({ cartItems, setCartItems, setPage }) {
+export default function ShopPage({
+	cartItems,
+	handleChange,
+	handleItemQty,
+	handleAddCart,
+}) {
 	return (
-		<>
-			<header>
-				<Banner />
-				<NavigationBar itemsQty={cartItems} setPage={setPage} />
-			</header>
-			<main>
-				<Cards setCartItems={setCartItems} />
-			</main>
-		</>
+		<main>
+			<Cards
+				cartItems={cartItems}
+				handleChange={handleChange}
+				handleItemQty={handleItemQty}
+				handleAddCart={handleAddCart}
+			/>
+		</main>
 	);
 }
 
-function Cards({ setCartItems }) {
+function Cards({ cartItems, handleChange, handleItemQty, handleAddCart }) {
 	return (
 		<div className={styles.cards}>
-			<Card setCartItems={setCartItems} />
-			<Card setCartItems={setCartItems} />
-			<Card setCartItems={setCartItems} />
+			{cartItems.map((item) => (
+				<Card
+					item={item}
+					handleChange={handleChange}
+					handleItemQty={handleItemQty}
+					handleAddCart={handleAddCart}
+				/>
+			))}
 		</div>
 	);
 }
 
-function Card({ setCartItems }) {
-	const [itemQuantity, setItemQuantity] = useState(0);
-
-	function handleChange(e) {
-		const quantity = e.target.value;
-
-		setItemQuantity(Number(quantity));
-	}
-
-	function handleAddCart() {
-		setCartItems(itemQuantity);
-	}
-
+function Card({ item, handleChange, handleItemQty, handleAddCart }) {
 	return (
 		<div className={styles.card}>
-			<ProductTitle name='Brush' />
-			<ProductImage />
-			<Quantity
-				quantity={itemQuantity}
-				setItemQuantity={setItemQuantity}
-				onClick={handleClick}
-				onChange={handleChange}
-			/>
-			<Button
-				name='Add to Cart'
-				className={styles.InputNCartBtn}
-				onClick={handleAddCart}
-			/>
-		</div>
-	);
-}
-
-function ProductTitle({ name }) {
-	return (
-		<h1 className={`${styles.cardTitle} ${styles.InputNCartBtn}`}>{name}</h1>
-	);
-}
-
-function ProductImage({ url }) {
-	return <img src={url} alt='' />;
-}
-
-export function Quantity({ quantity, setItemQuantity, onClick, onChange }) {
-	return (
-		<>
+			<h1 className={`${styles.cardTitle} ${styles.InputNCartBtn}`}>
+				{item.name}
+			</h1>
+			<img src={item.url} alt='' />;
 			<input
 				type='tel'
 				className={`${styles.InputNCartBtn} ${styles.cardTitle}`}
-				value={quantity}
-				onChange={onChange}
+				data-ref={item.ref}
+				value={item.quantity}
+				onChange={handleChange}
 			/>
-			<Button name='+' onClick={onClick} setItemQuantity={setItemQuantity} />
-			<Button name='-' onClick={onClick} setItemQuantity={setItemQuantity} />
-		</>
+			<Button name='+' handleClick={handleItemQty} />
+			<Button name='-' handleClick={handleItemQty} />
+			<Button
+				name='Add to Cart'
+				className={styles.InputNCartBtn}
+				handleClick={handleAddCart}
+			/>
+		</div>
 	);
 }
 
-function Button({ name, className = name, setItemQuantity, onClick }) {
+function Button({ name, className = name, handleClick }) {
 	return (
-		<button className={className} onClick={(e) => onClick(e, setItemQuantity)}>
+		<button className={className} onClick={handleClick}>
 			{name}
 		</button>
 	);
