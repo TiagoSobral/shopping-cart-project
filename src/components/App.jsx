@@ -26,18 +26,20 @@ export default function App() {
 		const ref = e.target.dataset.ref;
 		const quantity = e.target.textContent;
 
-		quantity === '+'
-			? setCartItems(
-					cartItems.map((item) =>
-						item.ref === ref
-							? {
-									...item,
-									quantity: Number(item.quantity + 1),
-								}
-							: { ...item },
-					),
-				)
-			: setCartItems(
+		if (quantity === '+') {
+			setProducts(
+				cartItems.map((item) =>
+					item.ref === ref
+						? {
+								...item,
+								quantity: Number(item.quantity + 1),
+							}
+						: { ...item },
+				),
+			);
+		} else {
+			if (quantity != 0) {
+				setProducts(
 					cartItems.map((item) =>
 						item.ref === ref
 							? {
@@ -47,17 +49,13 @@ export default function App() {
 							: { ...item },
 					),
 				);
+			}
+		}
 	}
 
 	function handleChange(e) {
 		const ref = e.target.dataset.ref;
 		const quantity = e.target.value;
-
-		setCartItems(
-			cartItems.map((item) =>
-				item.ref === ref ? { ...item, quantity: quantity } : { ...item },
-			),
-		);
 
 		setProducts(
 			products.map((item) =>
