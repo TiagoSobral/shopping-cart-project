@@ -1,29 +1,29 @@
 import styles from './NavigationBar.module.css';
 
-function NavigationBar({ itemsQty, setPage }) {
+function NavigationBar({ itemsQty, handlePage }) {
 	return (
 		<nav className={styles.navigationBanner}>
 			<ul className={styles.list}>
 				<li className='products'>
-					<button
-						className={styles.btn}
-						data-testid='navLink'
-						onClick={() => setPage('ShopPage')}
-					>
+					<button className={styles.btn} data-testid='navLink' onClick={handlePage}>
 						PRODUCTS
 					</button>
 				</li>
 				<li className='homeLinkName'>
-					<a className={styles.noLinkAppearance} data-testid='navLink'>
+					<button
+						className={styles.noLinkAppearance}
+						data-testid='navLink'
+						onClick={handlePage}
+					>
 						Typology.
 						<p className={styles.paragraph}>PARIS</p>
-					</a>
+					</button>
 				</li>
 				<li className='cartLink'>
 					<button
 						className={`${styles.btn} ${styles.cart}`}
 						data-testid='cartLink'
-						onClick={() => setPage('CartPage')}
+						onClick={handlePage}
 					>
 						{itemsQty > 0 ? itemsQty : 'CART'}
 					</button>
