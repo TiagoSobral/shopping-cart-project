@@ -6,6 +6,7 @@ import ShopPage from './shop-page/ShopPage.jsx';
 import CartPage from './cart-page/CartPage.jsx';
 
 export default function App() {
+	const [products, setProducts] = useState([]);
 	const [cartItems, setCartItems] = useState(items);
 	const [page, setPage] = useState('HomePage');
 
@@ -57,29 +58,56 @@ export default function App() {
 				item.ref === ref ? { ...item, quantity: quantity } : { ...item },
 			),
 		);
+
+		setProducts(
+			products.map((item) =>
+				item.ref === ref ? { ...item, quantity: quantity } : { ...item },
+			),
+		);
 	}
 
 	function handleAddCart(e) {
 		const ref = e.target.dataset.ref;
-		setCartItems(itemQuantity);
+		const product = items.filter((item) => item.ref === ref)[0];
+
+		setCartItems(
+			cartItems.map((item) =>
+				item.ref === ref
+					? { ...item, quantity: Number(item.quantity + product.quantity) }
+					: { ...item },
+			),
+		);
+
+		setProducts(
+			products.map((item) =>
+				item.ref === ref ? { ...item, quantity: 0 } : { ...item },
+			),
+		);
 	}
 
 	return (
 		<div>
 			{page === 'HomePage' ? (
-				<HomePage cartItems={cartItems} handlePage={handlePage} />
+				<HomePage
+					cartItems={cartItems}
+					handlePage={handlePage}
+					handleChange={handleChange}
+					handleItemQty={handleItemQty}
+				/>
 			) : page === 'ShopPage' ? (
 				<ShopPage
 					cartItems={cartItems}
 					handlePage={handlePage}
 					handleChange={handleChange}
-					handleItemQty={setCartItems}
+					handleItemQty={handleItemQty}
+					handleAddCart={handleAddCart}
 				/>
 			) : (
 				<CartPage
 					cartItems={cartItems}
-					setCartItems={setCartItems}
 					handlePage={handlePage}
+					handleChange={handleChange}
+					handleItemQty={handleItemQty}
 				/>
 			)}
 		</div>
