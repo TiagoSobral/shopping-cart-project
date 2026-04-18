@@ -21,6 +21,11 @@
 	width: 100%;
 }
 
+.listItem {
+	display: flex;
+	justify-content: center;
+}
+
 .paragraph {
 	font-size: 1rem;
 	padding: 0;
