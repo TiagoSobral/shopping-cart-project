@@ -1,63 +1,54 @@
-import handleClick from '../../helper-functions/helper-functions';
-import Banner from '../banner/Banner';
-import NavigationBar from '../navigation-bar/NavigationBar';
-import { Quantity } from '../shop-page/ShopPage';
 import styles from './CartPage.module.css';
+import { Button } from '../shop-page/ShopPage';
 
-export default function CartPage({ itemsCart, setItemQuantity }) {
+export default function CartPage({ cartItems, handleItemQty }) {
 	return (
-		<>
-			<header>
-				<Banner />
-				<NavigationBar />
-			</header>
-			<main className={styles.cart}>
-				<Cart items={itemsCart} setItemQuantity={setItemQuantity} />
-			</main>
-		</>
+		<main className={styles.cart}>
+			<Cart cartItems={cartItems} handleItemQty={handleItemQty} />
+		</main>
 	);
 }
 
-function Cart({ items, setItemQuantity }) {
+function Cart({ cartItems, handleItemQty }) {
 	return (
 		<>
 			<h1>Order Summary</h1>
 			<section>
-				<Items items={items} setItemQuantity={setItemQuantity} />
+				<Items cartItems={cartItems} handleItemQty={handleItemQty} />
 			</section>
 		</>
 	);
 }
 
-function Items({ items, setItemQuantity }) {
+function Items({ cartItems, handleItemQty }) {
 	return (
 		<ul className={styles.list}>
-			{items.map((item) => (
-				<li>
-					<Item item={item} setItemQuantity={setItemQuantity} />
-				</li>
+			{cartItems.map((item) => (
+				<Item item={item} handleItemQty={handleItemQty} />
 			))}
 		</ul>
 	);
 }
 
-function Item({ item, setItemQuantity }) {
+function Item({ item, handleItemQty }) {
 	const price = item.price * item.quantity;
 
 	return (
-		<ul className={styles.list}>
+		<ul className={styles.list} id={item.ref}>
 			<li>
 				<img src={item.src} />
 			</li>
 			<li>{item.name}</li>
 			<li>{item.description}</li>
 			<li>{price}$</li>
-			<li>
-				<Quantity
-					quantity={item.quantity}
-					onClick={(e) => handleClick(e, setItemQuantity)}
-				/>
-			</li>
+			<input
+				type='tel'
+				className={`${styles.InputNCartBtn} ${styles.cardTitle}`}
+				data-ref={item.ref}
+				value={item.quantity}
+			/>
+			<Button name='+' handleClick={handleItemQty} />
+			<Button name='-' handleClick={handleItemQty} />
 		</ul>
 	);
 }
