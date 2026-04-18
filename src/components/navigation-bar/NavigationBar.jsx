@@ -1,31 +1,35 @@
 import styles from './NavigationBar.module.css';
 
-function NavigationBar({ itemsQty, handlePage }) {
+function NavigationBar({ cartItems, handlePage }) {
+	const cartQuantity = cartItems.reduce(
+		(acc, curr) => acc.quantity + curr.quantity,
+	);
+
 	return (
 		<nav className={styles.navigationBanner}>
 			<ul className={styles.list}>
-				<li className='products'>
-					<button className={styles.btn} data-testid='navLink' onClick={handlePage}>
+				<li className={`products ${styles.listItem}`}>
+					<button
+						className={styles.btn}
+						data-testid='productsBtn'
+						onClick={handlePage}
+					>
 						PRODUCTS
 					</button>
 				</li>
-				<li className='homeLinkName'>
-					<button
-						className={styles.noLinkAppearance}
-						data-testid='navLink'
-						onClick={handlePage}
-					>
+				<li className={`homeLinkName ${styles.listItem}`}>
+					<button className={styles.btn} data-testid='homeBtn' onClick={handlePage}>
 						Typology.
 						<p className={styles.paragraph}>PARIS</p>
 					</button>
 				</li>
-				<li className='cartLink'>
+				<li className={`cartLink ${styles.listItem}`}>
 					<button
 						className={`${styles.btn} ${styles.cart}`}
-						data-testid='cartLink'
+						data-testid='cartBtn'
 						onClick={handlePage}
 					>
-						{itemsQty > 0 ? itemsQty : 'CART'}
+						{cartQuantity > 0 ? cartQuantity : 'CART'}
 					</button>
 				</li>
 			</ul>
