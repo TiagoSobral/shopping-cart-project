@@ -4,6 +4,8 @@ import { useState } from 'react';
 import HomePage from './homepage/Homepage.jsx';
 import ShopPage from './shop-page/ShopPage.jsx';
 import CartPage from './cart-page/CartPage.jsx';
+import Banner from './banner/Banner.jsx';
+import NavigationBar from './navigation-bar/NavigationBar.jsx';
 
 export default function App() {
 	const [products, setProducts] = useState([]);
@@ -11,11 +13,13 @@ export default function App() {
 	const [page, setPage] = useState('HomePage');
 
 	function handlePage(e) {
-		const name = e.target.textContent;
+		const name = e.target.dataset.testid;
 
-		if (name == 'PRODUCT') {
+		console.log(name);
+
+		if (name == 'productsBtn') {
 			setPage('ShopPage');
-		} else if (name == 'CART') {
+		} else if (name == 'cartBtn') {
 			setPage('CartPage');
 		} else {
 			setPage('HomePage');
@@ -84,37 +88,35 @@ export default function App() {
 	}
 
 	return (
-		<div>
+		<>
+			<header>
+				<Banner />
+				<NavigationBar cartItems={cartItems} handlePage={handlePage} />
+			</header>
 			{page === 'HomePage' ? (
 				<HomePage
 					cartItems={cartItems}
-					handlePage={handlePage}
 					handleChange={handleChange}
 					handleItemQty={handleItemQty}
 				/>
 			) : page === 'ShopPage' ? (
 				<ShopPage
 					cartItems={cartItems}
-					handlePage={handlePage}
 					handleChange={handleChange}
 					handleItemQty={handleItemQty}
 					handleAddCart={handleAddCart}
 				/>
 			) : (
-				<CartPage
-					cartItems={cartItems}
-					handlePage={handlePage}
-					handleChange={handleChange}
-					handleItemQty={handleItemQty}
-				/>
+				<CartPage cartItems={cartItems} handleItemQty={handleItemQty} />
 			)}
-		</div>
+		</>
 	);
 }
 
 const items = [
 	{
 		id: '1234',
+		url: 'bla',
 		name: 'Brush',
 		quantity: 3,
 		description: 'a beautiful brush 2mm',
@@ -122,6 +124,7 @@ const items = [
 	},
 	{
 		id: '12345',
+		url: 'bua',
 		name: 'pencil',
 		quantity: 2,
 		description: 'lip liner 3mm pencil',
