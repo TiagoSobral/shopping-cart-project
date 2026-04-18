@@ -9,7 +9,7 @@ export default function ShopPage({
 	return (
 		<main>
 			<Cards
-				cartItems={cartItems}
+				products={cartItems}
 				handleChange={handleChange}
 				handleItemQty={handleItemQty}
 				handleAddCart={handleAddCart}
@@ -18,10 +18,10 @@ export default function ShopPage({
 	);
 }
 
-function Cards({ cartItems, handleChange, handleItemQty, handleAddCart }) {
+function Cards({ products, handleChange, handleItemQty, handleAddCart }) {
 	return (
 		<div className={styles.cards}>
-			{cartItems.map((item) => (
+			{products.map((item) => (
 				<Card
 					item={item}
 					handleChange={handleChange}
@@ -39,7 +39,7 @@ function Card({ item, handleChange, handleItemQty, handleAddCart }) {
 			<h1 className={`${styles.cardTitle} ${styles.InputNCartBtn}`}>
 				{item.name}
 			</h1>
-			<img src={item.url} alt='' />;
+			<img src={item.url} alt='' />
 			<input
 				type='tel'
 				className={`${styles.InputNCartBtn} ${styles.cardTitle}`}
@@ -47,8 +47,8 @@ function Card({ item, handleChange, handleItemQty, handleAddCart }) {
 				value={item.quantity}
 				onChange={handleChange}
 			/>
-			<Button name='+' handleClick={handleItemQty} />
 			<Button name='-' handleClick={handleItemQty} />
+			<Button name='+' handleClick={handleItemQty} />
 			<Button
 				name='Add to Cart'
 				className={styles.InputNCartBtn}
@@ -58,7 +58,7 @@ function Card({ item, handleChange, handleItemQty, handleAddCart }) {
 	);
 }
 
-function Button({ name, className = name, handleClick }) {
+export function Button({ name, className = name, handleClick }) {
 	return (
 		<button className={className} onClick={handleClick}>
 			{name}
