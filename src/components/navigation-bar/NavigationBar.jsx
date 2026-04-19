@@ -1,9 +1,10 @@
 import styles from './NavigationBar.module.css';
 
-function NavigationBar({ cartItems, handlePage }) {
-	const cartQuantity = cartItems.reduce(
-		(acc, curr) => acc.quantity + curr.quantity,
-	);
+function NavigationBar({ cartItems = 0, handlePage }) {
+	let cartQuantity = 0;
+	if (cartItems != 0) {
+		cartQuantity = cartItems.reduce((acc, curr) => acc.quantity + curr.quantity);
+	}
 
 	return (
 		<nav className={styles.navigationBanner}>

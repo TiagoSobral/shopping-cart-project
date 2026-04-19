@@ -1,6 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import NavigationBar from './NavigationBar';
+import userEvent from '@testing-library/user-event';
+import ShopPage from '../shop-page/ShopPage';
 
 describe('Navigation Bar', () => {
 	it('navigation bar component is rendered', () => {
@@ -9,18 +11,31 @@ describe('Navigation Bar', () => {
 		expect(screen.getByRole('navigation')).toBeInTheDocument();
 	});
 
-	it('navigation bar has 4 elements', () => {
+	it('renders 3 buttons', () => {
 		render(<NavigationBar />);
 
-		expect(screen.getByRole('list')).toBeInTheDocument();
-		expect(screen.getAllByRole('listitem').length).toEqual(4);
+		const productsBtn = screen.getByRole('button', { name: 'PRODUCTS' });
+		const homeBtn = screen.getByRole('button', { name: /TYPOLOGY./i });
+		const cartBtn = screen.getByRole('button', { name: 'CART' });
+
+		expect(productsBtn).toBeInTheDocument();
+		expect(homeBtn).toBeInTheDocument();
+		expect(cartBtn).toBeInTheDocument();
 	});
 
-	it('all are clickable links', () => {
-		render(<NavigationBar />);
+	it('onClick is called when button is clicked', async () => {
+		const onClick = vi.fn();
+		render(<NavigationBar handlePage={onClick} />);
+		const user = userEvent.setup();
 
-		const links = screen.getAllByTestId('navLink');
+		const productsBtn = screen.getByRole('button', { name: 'PRODUCTS' });
+		const homeBtn = screen.getByRole('button', { name: /TYPOLOGY./i });
+		const cartBtn = screen.getByRole('button', { name: 'CART' });
 
-		expect(links.length).toEqual(4);
+		await user.click(productsBtn);
+		await user.click(homeBtn);
+		await user.click(cartBtn);
+
+		expect(onClick).toHaveBeenCalled();
 	});
 });
