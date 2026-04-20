@@ -57,4 +57,37 @@ describe('Product Quantity Buttons', () => {
 
 		expect(handleAddCart).toHaveBeenCalled();
 	});
+
+	it('changes item quantity when user types', async () => {
+		const user = userEvent.setup();
+
+		render(<App />);
+
+		const productsBtn = screen.getByTestId('productsBtn');
+
+		await user.click(productsBtn);
+
+		const input = screen.getAllByRole('textbox')[0];
+
+		await user.type(input, '{backspace}2');
+
+		expect(input.value).toEqual('2');
+	});
+
+	it('it increments by one when user clicks +', async () => {
+		const user = userEvent.setup();
+
+		render(<App />);
+
+		const productsBtn = screen.getByTestId('productsBtn');
+
+		await user.click(productsBtn);
+
+		const input = screen.getAllByRole('textbox')[0];
+		const incrementBtn = screen.getAllByRole('button', { name: '+' })[0];
+
+		await user.click(incrementBtn);
+
+		expect(input.value).toEqual('4');
+	});
 });
