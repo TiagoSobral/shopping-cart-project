@@ -115,7 +115,7 @@ export default function App() {
 
 const items = [
 	{
-		id: '1234',
+		ref: '1234',
 		url: 'bla',
 		name: 'Brush',
 		quantity: 3,
@@ -123,7 +123,7 @@ const items = [
 		price: 12.0,
 	},
 	{
-		id: '12345',
+		ref: '12345',
 		url: 'bua',
 		name: 'pencil',
 		quantity: 2,

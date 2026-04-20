@@ -34,7 +34,7 @@ function Item({ item, handleItemQty }) {
 	const price = item.price * item.quantity;
 
 	return (
-		<ul className={styles.list} id={item.ref}>
+		<ul className={styles.list} key={item.ref}>
 			<li>
 				<img src={item.src} />
 			</li>
