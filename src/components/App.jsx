@@ -8,8 +8,8 @@ import Banner from './banner/Banner.jsx';
 import NavigationBar from './navigation-bar/NavigationBar.jsx';
 
 export default function App() {
-	const [products, setProducts] = useState([]);
-	const [cartItems, setCartItems] = useState(items);
+	const [products, setProducts] = useState(items);
+	const [cartItems, setCartItems] = useState([]);
 	const [page, setPage] = useState('HomePage');
 
 	function handlePage(e) {
@@ -27,12 +27,15 @@ export default function App() {
 	}
 
 	function handleItemQty(e) {
-		const ref = e.target.dataset.ref;
+		const ref = e.target.parentElement.dataset.ref;
 		const quantity = e.target.textContent;
+
+		console.log(ref);
+		console.log(products);
 
 		if (quantity === '+') {
 			setProducts(
-				cartItems.map((item) =>
+				products.map((item) =>
 					item.ref === ref
 						? {
 								...item,
@@ -44,7 +47,7 @@ export default function App() {
 		} else {
 			if (quantity != 0) {
 				setProducts(
-					cartItems.map((item) =>
+					products.map((item) =>
 						item.ref === ref
 							? {
 									...item,
@@ -58,7 +61,7 @@ export default function App() {
 	}
 
 	function handleChange(e) {
-		const ref = e.target.dataset.ref;
+		const ref = e.target.parentElement.dataset.ref;
 		const quantity = e.target.value;
 
 		setProducts(
@@ -69,7 +72,7 @@ export default function App() {
 	}
 
 	function handleAddCart(e) {
-		const ref = e.target.dataset.ref;
+		const ref = e.target.parentElement.dataset.ref;
 		const product = items.filter((item) => item.ref === ref)[0];
 
 		setCartItems(
@@ -101,7 +104,7 @@ export default function App() {
 				/>
 			) : page === 'ShopPage' ? (
 				<ShopPage
-					cartItems={cartItems}
+					products={products}
 					handleChange={handleChange}
 					handleItemQty={handleItemQty}
 					handleAddCart={handleAddCart}
