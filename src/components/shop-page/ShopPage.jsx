@@ -1,7 +1,7 @@
 import styles from './ShopPage.module.css';
 
 export default function ShopPage({
-	cartItems,
+	products = 0,
 	handleChange,
 	handleItemQty,
 	handleAddCart,
@@ -9,7 +9,7 @@ export default function ShopPage({
 	return (
 		<main>
 			<Cards
-				products={cartItems}
+				products={products}
 				handleChange={handleChange}
 				handleItemQty={handleItemQty}
 				handleAddCart={handleAddCart}
@@ -18,24 +18,30 @@ export default function ShopPage({
 	);
 }
 
-function Cards({ products, handleChange, handleItemQty, handleAddCart }) {
+export function Cards({
+	products,
+	handleChange,
+	handleItemQty,
+	handleAddCart,
+}) {
 	return (
-		<div className={styles.cards}>
+		<ul className={styles.cards}>
 			{products.map((item) => (
 				<Card
 					item={item}
 					handleChange={handleChange}
 					handleItemQty={handleItemQty}
 					handleAddCart={handleAddCart}
+					key={item.ref}
 				/>
 			))}
-		</div>
+		</ul>
 	);
 }
 
 function Card({ item, handleChange, handleItemQty, handleAddCart }) {
 	return (
-		<div className={styles.card}>
+		<li className={styles.card} data-ref={item.ref}>
 			<h1 className={`${styles.cardTitle} ${styles.InputNCartBtn}`}>
 				{item.name}
 			</h1>
@@ -43,7 +49,6 @@ function Card({ item, handleChange, handleItemQty, handleAddCart }) {
 			<input
 				type='tel'
 				className={`${styles.InputNCartBtn} ${styles.cardTitle}`}
-				data-ref={item.ref}
 				value={item.quantity}
 				onChange={handleChange}
 			/>
@@ -54,7 +59,7 @@ function Card({ item, handleChange, handleItemQty, handleAddCart }) {
 				className={styles.InputNCartBtn}
 				handleClick={handleAddCart}
 			/>
-		</div>
+		</li>
 	);
 }
 
