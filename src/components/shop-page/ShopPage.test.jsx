@@ -1,62 +1,60 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Card from './ShopPage';
+import { Cards } from './ShopPage';
 import ShopPage from './ShopPage';
+import App from '../App';
 
 describe('Product Quantity Buttons', () => {
-	it('Increment item quantity', async () => {
+	const items = [
+		{
+			ref: '1234',
+			url: 'bla',
+			name: 'Brush',
+			quantity: 3,
+			description: 'a beautiful brush 2mm',
+			price: 12.0,
+		},
+	];
+
+	it('handleItemQty gets called when increment or decrement clicked', async () => {
 		const user = userEvent.setup();
+		const handleItemQty = vi.fn();
 
-		render(<Card />);
+		render(<ShopPage products={items} handleItemQty={handleItemQty} />);
 
-		const input = screen.getByRole('textbox');
-		const increment = screen.getByText('+');
+		const incrementBtn = screen.getByRole('button', { name: '+' });
+		const decrementBtn = screen.getByRole('button', { name: '-' });
 
-		await user.click(increment);
-		await user.click(increment);
+		await user.click(incrementBtn);
+		await user.click(decrementBtn);
 
-		expect(Number(input.value)).toEqual(2);
+		expect(handleItemQty).toHaveBeenCalledTimes(2);
 	});
 
-	it('Decrement item quantity', async () => {
+	it('handleChange gets called when user changes input number', async () => {
 		const user = userEvent.setup();
+		const handleChange = vi.fn();
 
-		render(<Card />);
-
-		const input = screen.getByRole('textbox');
-		const decrement = screen.getByText('-');
-
-		await user.click(decrement);
-		await user.click(decrement);
-
-		expect(Number(input.value)).toEqual(0);
-	});
-
-	it('User changes item quantity manually', async () => {
-		const user = userEvent.setup();
-
-		render(<Card />);
+		render(<ShopPage products={items} handleChange={handleChange} />);
 
 		const input = screen.getByRole('textbox');
 
 		await user.type(input, '2');
 
-		expect(Number(input.value)).toEqual(2);
+		expect(handleChange).toHaveBeenCalled();
 	});
 
-	it('Adds item to cart', async () => {
+	it('handleAddCart gets called when cart button gets clicked', async () => {
 		const user = userEvent.setup();
+		const handleAddCart = vi.fn();
 
-		render(<ShopPage />);
+		render(<ShopPage products={items} handleAddCart={handleAddCart} />);
 
 		const addCart = screen.getByRole('button', { name: /Add to Cart/i });
-		const increment = screen.getByText('+');
-		const cart = screen.getByTestId('cartLink');
 
-		await user.click(increment);
 		await user.click(addCart);
 
-		expect(cart.textContent).toEqual('1');
+		expect(handleAddCart).toHaveBeenCalled();
 	});
 });
