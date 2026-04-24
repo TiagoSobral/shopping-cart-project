@@ -36,7 +36,7 @@ function Item({ item, handleItemQty }) {
 	return (
 		<ul className={styles.list} key={item.ref}>
 			<li>
-				<img src={item.src} />
+				<img src={item.url} />
 			</li>
 			<li>{item.name}</li>
 			<li>{item.description}</li>
@@ -46,6 +46,7 @@ function Item({ item, handleItemQty }) {
 				className={`${styles.InputNCartBtn} ${styles.cardTitle}`}
 				data-ref={item.ref}
 				value={item.quantity}
+				name='quantity'
 			/>
 			<Button name='+' handleClick={handleItemQty} />
 			<Button name='-' handleClick={handleItemQty} />
