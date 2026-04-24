@@ -2,14 +2,14 @@
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 0.2rem;
-	margin: 5rem 0;
+	margin: 2rem 0;
 }
 
 .card {
 	display: grid;
 	grid-template-columns: repeat(2, 2fr);
-	padding: 2rem 0.1rem;
-	background-color: rgb(238, 246, 246);
+	padding: 1rem 0.1rem;
+	align-items: center;
 }
 
 .InputNCartBtn {
@@ -18,4 +18,12 @@
 
 .cardTitle {
 	text-align: center;
+	font-size: 1rem;
+}
+
+.img {
+	max-width: 200px;
+	grid-column: 1/ 3;
+	justify-self: center;
+	padding: 1rem;
 }

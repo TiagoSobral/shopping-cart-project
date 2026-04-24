@@ -45,7 +45,7 @@ function Card({ item, handleChange, handleItemQty, handleAddCart }) {
 			<h1 className={`${styles.cardTitle} ${styles.InputNCartBtn}`}>
 				{item.name}
 			</h1>
-			<img src={item.url} alt='' />
+			<img src={item.url} alt='' className={styles.img} />
 			<input
 				type='tel'
 				className={`${styles.InputNCartBtn} ${styles.cardTitle}`}
