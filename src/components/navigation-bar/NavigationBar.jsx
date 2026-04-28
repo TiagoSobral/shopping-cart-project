@@ -1,9 +1,9 @@
 import styles from './NavigationBar.module.css';
 
-function NavigationBar({ cartItems = 0, handlePage }) {
+function NavigationBar({ cartItems, handlePage }) {
 	let cartQuantity = 0;
-	if (cartItems != 0) {
-		cartQuantity = cartItems.reduce((acc, curr) => acc.quantity + curr.quantity);
+	if (cartItems != null) {
+		cartQuantity = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
 	}
 
 	return (

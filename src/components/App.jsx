@@ -7,7 +7,10 @@ import CartPage from './cart-page/CartPage.jsx';
 import Banner from './banner/Banner.jsx';
 import NavigationBar from './navigation-bar/NavigationBar.jsx';
 import { useEffect } from 'react';
-import { isDecreaseZero } from '../helper-functions/helper-functions.jsx';
+import {
+	addCart,
+	isDecreaseZero,
+} from '../helper-functions/helper-functions.jsx';
 
 export default function App() {
 	const [products, setProducts] = useState(null);
@@ -53,10 +56,6 @@ export default function App() {
 		const ref = e.target.parentElement.dataset.ref;
 		const quantity = e.target.textContent;
 
-		console.log(quantity);
-		console.log(ref);
-		console.log(products);
-
 		if (quantity === '+') {
 			setProducts(
 				products.map((item) =>
@@ -95,15 +94,9 @@ export default function App() {
 
 	function handleAddCart(e) {
 		const ref = e.target.parentElement.dataset.ref;
-		const product = products.filter((item) => item.ref === ref)[0];
+		const product = products.filter((item) => item.ref == ref)[0];
 
-		setCartItems(
-			cartItems.map((item) =>
-				item.ref == ref
-					? { ...item, quantity: Number(item.quantity + product.quantity) }
-					: { ...item },
-			),
-		);
+		setCartItems(addCart(cartItems, product));
 
 		setProducts(
 			products.map((item) =>
@@ -112,6 +105,7 @@ export default function App() {
 		);
 	}
 
+	console.log(cartItems);
 	return (
 		<>
 			<header>
