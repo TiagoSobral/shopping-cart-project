@@ -22,11 +22,11 @@ function Cart({ cartItems, handleItemQty }) {
 
 function Items({ cartItems, handleItemQty }) {
 	return (
-		<ul className={styles.list}>
+		<>
 			{cartItems.map((item) => (
-				<Item item={item} handleItemQty={handleItemQty} />
+				<Item item={item} handleItemQty={handleItemQty} key={item.ref} />
 			))}
-		</ul>
+		</>
 	);
 }
 
@@ -35,21 +35,29 @@ function Item({ item, handleItemQty }) {
 
 	return (
 		<ul className={styles.list} key={item.ref}>
-			<li>
-				<img src={item.url} />
+			<li className={styles.imageContainer}>
+				<img src={item.url} className={styles.image} />
 			</li>
 			<li>{item.name}</li>
-			<li>{item.description}</li>
-			<li>{price}$</li>
-			<input
-				type='tel'
-				className={`${styles.InputNCartBtn} ${styles.cardTitle}`}
-				data-ref={item.ref}
-				value={item.quantity}
-				name='quantity'
-			/>
-			<Button name='+' handleClick={handleItemQty} />
-			<Button name='-' handleClick={handleItemQty} />
+			<li className={styles.description}>{item.description}</li>
+			<li className={styles.price}>{price}$</li>
+			<li
+				className={`${styles.InputNCartBtn} ${styles.cardTitle} ${styles.quantity}`}
+			>
+				<input
+					type='tel'
+					data-ref={item.ref}
+					value={item.quantity}
+					name='quantity'
+					className={styles.input}
+				/>
+			</li>
+			<li>
+				<Button name='+' handleClick={handleItemQty} />
+			</li>
+			<li>
+				<Button name='-' handleClick={handleItemQty} />
+			</li>
 		</ul>
 	);
 }
