@@ -11,11 +11,12 @@ import {
 	addCart,
 	isDecreaseZero,
 } from '../helper-functions/helper-functions.jsx';
+import { Outlet } from 'react-router';
 
 export default function App() {
 	const [products, setProducts] = useState(null);
 	const [cartItems, setCartItems] = useState(null);
-	const [page, setPage] = useState('HomePage');
+	// const [page, setPage] = useState('HomePage');
 
 	useEffect(() => {
 		fetch(
@@ -40,17 +41,17 @@ export default function App() {
 			);
 	}, []);
 
-	function handlePage(e) {
-		const name = e.target.dataset.testid;
+	// function handlePage(e) {
+	// 	const name = e.target.dataset.testid;
 
-		if (name == 'productsBtn') {
-			setPage('ShopPage');
-		} else if (name == 'cartBtn') {
-			setPage('CartPage');
-		} else {
-			setPage('HomePage');
-		}
-	}
+	// 	if (name == 'productsBtn') {
+	// 		setPage('ShopPage');
+	// 	} else if (name == 'cartBtn') {
+	// 		setPage('CartPage');
+	// 	} else {
+	// 		setPage('HomePage');
+	// 	}
+	// }
 
 	function handleItemQty(e) {
 		const ref = e.target.parentElement.dataset.ref;
@@ -104,15 +105,22 @@ export default function App() {
 			),
 		);
 	}
-
-	console.log(cartItems);
 	return (
 		<>
 			<header>
 				<Banner />
-				<NavigationBar cartItems={cartItems} handlePage={handlePage} />
+				<NavigationBar />
 			</header>
-			{page === 'HomePage' ? (
+			{/* should render HomePage */}
+			<Outlet
+				context={[products, cartItems, handleChange, handleItemQty, handleAddCart]}
+			/>
+		</>
+	);
+}
+
+{
+	/* {page === 'HomePage' ? (
 				<HomePage
 					cartItems={cartItems}
 					handleChange={handleChange}
@@ -127,26 +135,5 @@ export default function App() {
 				/>
 			) : (
 				<CartPage cartItems={cartItems} handleItemQty={handleItemQty} />
-			)}
-		</>
-	);
+			)} */
 }
-
-// const items = [
-// 	{
-// 		ref: '1234',
-// 		url: 'bla',
-// 		name: 'Brush',
-// 		quantity: 3,
-// 		description: 'a beautiful brush 2mm',
-// 		price: 12.0,
-// 	},
-// 	{
-// 		ref: '12345',
-// 		url: 'bua',
-// 		name: 'pencil',
-// 		quantity: 2,
-// 		description: 'lip liner 3mm pencil',
-// 		price: 20.0,
-// 	},
-// ];
