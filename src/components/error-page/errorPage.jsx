@@ -1,4 +1,4 @@
-import { useRouteError } from 'react-router';
+import { useRouteError, Link } from 'react-router';
 import styles from './errorPage.module.css';
 
 export function ErrorPage() {
@@ -8,6 +8,7 @@ export function ErrorPage() {
 			<h1>Oops!</h1>
 			<h2>Sorry, an unexpected error has occurred.</h2>
 			<h3>{error.statusText || error.message}</h3>
+			<Link to='/'>Go Back</Link>
 		</section>
 	);
 }
