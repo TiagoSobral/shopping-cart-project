@@ -1,11 +1,9 @@
+import { useOutletContext } from 'react-router';
 import styles from './ShopPage.module.css';
 
-export default function ShopPage({
-	products = 0,
-	handleChange,
-	handleItemQty,
-	handleAddCart,
-}) {
+export default function ShopPage() {
+	const [products, , handleChange, handleItemQty, handleAddCart] =
+		useOutletContext();
 	return (
 		<main>
 			<Cards
