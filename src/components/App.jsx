@@ -16,7 +16,6 @@ import { Outlet } from 'react-router';
 export default function App() {
 	const [products, setProducts] = useState(null);
 	const [cartItems, setCartItems] = useState(null);
-	// const [page, setPage] = useState('HomePage');
 
 	useEffect(() => {
 		fetch(
@@ -35,23 +34,11 @@ export default function App() {
 						brand: item.brand,
 						description: item.description,
 						price: item.price,
-						quantity: 0,
+						quantity: 1,
 					})),
 				),
 			);
 	}, []);
-
-	// function handlePage(e) {
-	// 	const name = e.target.dataset.testid;
-
-	// 	if (name == 'productsBtn') {
-	// 		setPage('ShopPage');
-	// 	} else if (name == 'cartBtn') {
-	// 		setPage('CartPage');
-	// 	} else {
-	// 		setPage('HomePage');
-	// 	}
-	// }
 
 	function handleItemQty(e) {
 		const ref = e.target.parentElement.dataset.ref;

@@ -7,8 +7,8 @@ export default function handleClick(e, callback) {
 }
 
 export function isDecreaseZero(quantity) {
-	let result = 0;
-	if (quantity > 0) {
+	let result = 1;
+	if (quantity > 1) {
 		result = quantity - 1;
 	}
 	return result;
