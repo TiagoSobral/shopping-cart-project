@@ -9,7 +9,6 @@
 	display: grid;
 	grid-template-columns: repeat(2, 2fr);
 	padding: 1rem 0.1rem;
-	align-items: center;
 }
 
 .InputNCartBtn {
@@ -17,6 +16,7 @@
 }
 
 .cardTitle {
+	min-height: 50px;
 	text-align: center;
 	font-size: 1rem;
 }
@@ -26,4 +26,10 @@
 	grid-column: 1/ 3;
 	justify-self: center;
 	padding: 1rem;
+}
+
+.inputField {
+	text-align: center;
+	border-style: none;
+	min-height: 1rem;
 }
