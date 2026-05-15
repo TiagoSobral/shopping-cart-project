@@ -88,7 +88,7 @@ export default function App() {
 
 		setProducts(
 			products.map((item) =>
-				item.ref == ref ? { ...item, quantity: 0 } : { ...item },
+				item.ref == ref ? { ...item, quantity: 1 } : { ...item },
 			),
 		);
 	}

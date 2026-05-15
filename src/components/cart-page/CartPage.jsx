@@ -1,7 +1,9 @@
 import styles from './CartPage.module.css';
 import { Button } from '../shop-page/ShopPage';
+import { useOutletContext } from 'react-router';
 
-export default function CartPage({ cartItems, handleItemQty }) {
+export default function CartPage() {
+	const [, cartItems, , handleItemQty] = useOutletContext();
 	return (
 		<main className={styles.cart}>
 			<Cart cartItems={cartItems} handleItemQty={handleItemQty} />
@@ -40,9 +42,9 @@ function Item({ item, handleItemQty }) {
 			</li>
 			<li>{item.name}</li>
 			<li className={styles.description}>{item.description}</li>
-			<li className={styles.price}>{price}$</li>
+			<li className={`${styles.price} ${styles.quantities}`}>{price}$</li>
 			<li
-				className={`${styles.InputNCartBtn} ${styles.cardTitle} ${styles.quantity}`}
+				className={`${styles.InputNCartBtn} ${styles.cardTitle} ${styles.quantity} ${styles.quantities}`}
 			>
 				<input
 					type='tel'
@@ -52,11 +54,11 @@ function Item({ item, handleItemQty }) {
 					className={styles.input}
 				/>
 			</li>
-			<li>
-				<Button name='+' handleClick={handleItemQty} />
-			</li>
-			<li>
+			<li className={styles.quantities}>
 				<Button name='-' handleClick={handleItemQty} />
+			</li>
+			<li className={styles.quantities}>
+				<Button name='+' handleClick={handleItemQty} />
 			</li>
 		</ul>
 	);
