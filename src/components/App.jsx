@@ -70,14 +70,24 @@ export default function App() {
 	}
 
 	function handleChange(e) {
-		const ref = e.target.parentElement.dataset.ref;
+		let ref = e.target.parentElement.dataset.ref;
+		const type = e.target.parentElement.dataset.type;
 		const quantity = e.target.value;
 
-		setProducts(
-			products.map((item) =>
-				item.ref == ref ? { ...item, quantity: quantity } : { ...item },
-			),
-		);
+		if (type === 'shop') {
+			return setProducts(
+				products.map((item) =>
+					item.ref == ref ? { ...item, quantity: quantity } : { ...item },
+				),
+			);
+		} else {
+			ref = e.target.parentElement.parentElement.dataset.ref;
+			setCartItems(
+				cartItems.map((item) =>
+					item.ref == ref ? { ...item, quantity: quantity } : { ...item },
+				),
+			);
+		}
 	}
 
 	function handleAddCart(e) {

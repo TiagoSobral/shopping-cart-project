@@ -3,40 +3,58 @@ import { Button } from '../shop-page/ShopPage';
 import { useOutletContext } from 'react-router';
 
 export default function CartPage() {
-	const [, cartItems, , handleItemQty] = useOutletContext();
+	const [, cartItems, handleChange, handleItemQty] = useOutletContext();
 	return (
 		<main className={styles.cart}>
-			<Cart cartItems={cartItems} handleItemQty={handleItemQty} />
+			<Cart
+				cartItems={cartItems}
+				handleChange={handleChange}
+				handleItemQty={handleItemQty}
+			/>
 		</main>
 	);
 }
 
-function Cart({ cartItems, handleItemQty }) {
+function Cart({ cartItems, handleChange, handleItemQty }) {
 	return (
 		<>
 			<h1>Order Summary</h1>
 			<section>
-				<Items cartItems={cartItems} handleItemQty={handleItemQty} />
+				<Items
+					cartItems={cartItems}
+					handleChange={handleChange}
+					handleItemQty={handleItemQty}
+				/>
 			</section>
 		</>
 	);
 }
 
-function Items({ cartItems, handleItemQty }) {
+function Items({ cartItems, handleChange, handleItemQty }) {
 	return (
 		<>
 			{cartItems.map((item) => (
-				<Item item={item} handleItemQty={handleItemQty} key={item.ref} />
+				<Item
+					item={item}
+					handleChange={handleChange}
+					handleItemQty={handleItemQty}
+					key={item.ref}
+				/>
 			))}
 		</>
 	);
 }
 
-function Item({ item, handleItemQty }) {
+function Item({ item, handleChange, handleItemQty }) {
 	const price = item.price * item.quantity;
 
 	return (
-		<ul className={styles.list} key={item.ref}>
+		<ul
+			className={styles.list}
+			key={item.ref}
+			data-ref={item.ref}
+			data-type='cart'
+		>
 			<li className={styles.imageContainer}>
 				<img src={item.url} className={styles.image} />
 			</li>
@@ -52,6 +70,7 @@ function Item({ item, handleItemQty }) {
 					value={item.quantity}
 					name='quantity'
 					className={styles.input}
+					onChange={handleChange}
 				/>
 			</li>
 			<li className={styles.quantities}>
