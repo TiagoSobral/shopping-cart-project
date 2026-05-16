@@ -9,7 +9,7 @@ import NavigationBar from './navigation-bar/NavigationBar.jsx';
 import { useEffect } from 'react';
 import {
 	addCart,
-	isDecreaseZero,
+	changeBtnQty,
 } from '../helper-functions/helper-functions.jsx';
 import { Outlet } from 'react-router';
 
@@ -41,32 +41,37 @@ export default function App() {
 	}, []);
 
 	function handleItemQty(e) {
+		let type = e.target.parentElement.dataset.type;
 		const ref = e.target.parentElement.dataset.ref;
 		const quantity = e.target.textContent;
 
-		if (quantity === '+') {
-			setProducts(
-				products.map((item) =>
-					item.ref == ref
-						? {
-								...item,
-								quantity: item.quantity + 1,
-							}
-						: { ...item },
-				),
-			);
-		} else {
-			setProducts(
-				products.map((item) => {
-					return item.ref == ref
-						? {
-								...item,
-								quantity: isDecreaseZero(item.quantity),
-							}
-						: { ...item };
-				}),
-			);
-		}
+		type === 'shop'
+			? changeBtnQty(products, quantity, ref, setProducts)
+			: changeBtnQty(products, quantity, ref, setCartItems);
+
+		// if (quantity === '+') {
+		// 	setProducts(
+		// 		products.map((item) =>
+		// 			item.ref == ref
+		// 				? {
+		// 						...item,
+		// 						quantity: item.quantity + 1,
+		// 					}
+		// 				: { ...item },
+		// 		),
+		// 	);
+		// } else {
+		// 	setProducts(
+		// 		products.map((item) => {
+		// 			return item.ref == ref
+		// 				? {
+		// 						...item,
+		// 						quantity: isDecreaseZero(item.quantity),
+		// 					}
+		// 				: { ...item };
+		// 		}),
+		// 	);
+		// }
 	}
 
 	function handleChange(e) {

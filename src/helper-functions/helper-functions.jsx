@@ -30,3 +30,29 @@ export function addCart(cart, item) {
 		}
 	}
 }
+
+export function changeBtnQty(products, signal, ref, callback) {
+	if (signal === '+') {
+		callback(
+			products.map((item) =>
+				item.ref == ref
+					? {
+							...item,
+							quantity: item.quantity + 1,
+						}
+					: { ...item },
+			),
+		);
+	} else {
+		callback(
+			products.map((item) => {
+				return item.ref == ref
+					? {
+							...item,
+							quantity: isDecreaseZero(item.quantity),
+						}
+					: { ...item };
+			}),
+		);
+	}
+}
