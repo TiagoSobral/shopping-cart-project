@@ -7,24 +7,30 @@ function NavigationBar({ cartItems }) {
 		cartQuantity = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
 	}
 
+	console.log(cartItems);
+
 	return (
 		<nav className={styles.navigationBanner}>
 			<ul className={styles.list}>
 				<li className={`products ${styles.listItem}`}>
 					<button className={styles.btn}>
-						<Link to='shoppage'>PRODUCTS</Link>
+						<Link to='shoppage' className={styles.link}>
+							PRODUCTS
+						</Link>
 					</button>
 				</li>
 				<li className={`homeLinkName ${styles.listItem}`}>
 					<button className={styles.btn}>
-						<Link to='/'>
+						<Link to='/' className={styles.link}>
 							Typology. <p className={styles.paragraph}>PARIS</p>
 						</Link>
 					</button>
 				</li>
 				<li className={`cartLink ${styles.listItem}`}>
 					<button className={`${styles.btn} ${styles.cart}`}>
-						<Link to='cartpage'>{cartQuantity > 0 ? cartQuantity : 'CART'}</Link>
+						<Link to='cartpage' className={styles.link}>
+							{cartQuantity > 0 ? cartQuantity : 'CART'}
+						</Link>
 					</button>
 				</li>
 			</ul>

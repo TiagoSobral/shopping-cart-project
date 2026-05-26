@@ -41,3 +41,8 @@
 	font-size: 1rem;
 	font-weight: 600;
 }
+
+.link {
+	text-decoration: none;
+	color: black;
+}
