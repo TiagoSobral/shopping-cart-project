@@ -48,30 +48,6 @@ export default function App() {
 		type === 'shop'
 			? changeBtnQty(products, quantity, ref, setProducts)
 			: changeBtnQty(products, quantity, ref, setCartItems);
-
-		// if (quantity === '+') {
-		// 	setProducts(
-		// 		products.map((item) =>
-		// 			item.ref == ref
-		// 				? {
-		// 						...item,
-		// 						quantity: item.quantity + 1,
-		// 					}
-		// 				: { ...item },
-		// 		),
-		// 	);
-		// } else {
-		// 	setProducts(
-		// 		products.map((item) => {
-		// 			return item.ref == ref
-		// 				? {
-		// 						...item,
-		// 						quantity: isDecreaseZero(item.quantity),
-		// 					}
-		// 				: { ...item };
-		// 		}),
-		// 	);
-		// }
 	}
 
 	function handleChange(e) {
@@ -111,31 +87,11 @@ export default function App() {
 		<>
 			<header>
 				<Banner />
-				<NavigationBar />
+				<NavigationBar cartItems={cartItems} />
 			</header>
-			{/* should render HomePage */}
 			<Outlet
 				context={[products, cartItems, handleChange, handleItemQty, handleAddCart]}
 			/>
 		</>
 	);
-}
-
-{
-	/* {page === 'HomePage' ? (
-				<HomePage
-					cartItems={cartItems}
-					handleChange={handleChange}
-					handleItemQty={handleItemQty}
-				/>
-			) : page === 'ShopPage' ? (
-				<ShopPage
-					products={products}
-					handleChange={handleChange}
-					handleItemQty={handleItemQty}
-					handleAddCart={handleAddCart}
-				/>
-			) : (
-				<CartPage cartItems={cartItems} handleItemQty={handleItemQty} />
-			)} */
 }
