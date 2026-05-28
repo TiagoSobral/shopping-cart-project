@@ -9,19 +9,7 @@ import CartPage from './components/cart-page/CartPage.jsx';
 import { ErrorPage } from './components/error-page/errorPage.jsx';
 import HomePage from './components/homepage/Homepage.jsx';
 import NavigationBar from './components/navigation-bar/NavigationBar.jsx';
-
-export const routes = [
-	{
-		path: '/',
-		element: <App />,
-		errorElement: <ErrorPage />,
-		children: [
-			{ index: true, element: <HomePage /> },
-			{ path: '/shoppage', element: <ShopPage /> },
-			{ path: '/cartpage', element: <CartPage /> },
-		],
-	},
-];
+import { routes } from './routes.jsx';
 
 const router = createBrowserRouter(routes);
 
