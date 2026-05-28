@@ -10,7 +10,7 @@ import { ErrorPage } from './components/error-page/errorPage.jsx';
 import HomePage from './components/homepage/Homepage.jsx';
 import NavigationBar from './components/navigation-bar/NavigationBar.jsx';
 
-const router = createBrowserRouter([
+export const routes = [
 	{
 		path: '/',
 		element: <App />,
@@ -21,7 +21,9 @@ const router = createBrowserRouter([
 			{ path: '/cartpage', element: <CartPage /> },
 		],
 	},
-]);
+];
+
+const router = createBrowserRouter(routes);
 
 createRoot(document.getElementById('root')).render(
 	<StrictMode>
