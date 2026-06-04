@@ -7,8 +7,6 @@ function NavigationBar({ cartItems }) {
 		cartQuantity = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
 	}
 
-	console.log(cartItems);
-
 	return (
 		<nav className={styles.navigationBanner}>
 			<ul className={styles.list}>
