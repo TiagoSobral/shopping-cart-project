@@ -31,19 +31,35 @@ describe('Navigation Bar', () => {
 		expect(cartBtn).toBeInTheDocument();
 	});
 
-	it('onClick is called when button is clicked', async () => {
-		const onClick = vi.fn();
+	it('Images are rendered', async () => {
 		render(<RouterProvider router={route} />);
 		const user = userEvent.setup();
 
 		const productsBtn = screen.getByRole('button', { name: 'PRODUCTS' });
-		const homeBtn = screen.getByRole('button', { name: /TYPOLOGY./i });
-		const cartBtn = screen.getByRole('button', { name: 'CART' });
 
 		await user.click(productsBtn);
-		await user.click(homeBtn);
-		await user.click(cartBtn);
 
-		expect(onClick).toHaveBeenCalled();
+		const cards = screen.getAllByRole('presentation');
+
+		expect(cards.length).toBeGreaterThan(1);
+	});
+
+	it('Input changes with increase & decrease', async () => {
+		render(<RouterProvider router={route} />);
+		const user = userEvent.setup();
+
+		await user.click(screen.getByRole('button', { name: 'PRODUCTS' }));
+
+		const inputField = screen.getAllByRole('textbox')[0];
+
+		await user.click(screen.getAllByRole('button', { name: '+' })[0]);
+
+		expect(inputField.textContent).toEqual(1);
 	});
 });
+
+/* Tests: 
+- check if products show up in main
+- check increment and decrement on input field
+- check if input field can be changed
+- check when add product to cart if cart button becomes a number */
