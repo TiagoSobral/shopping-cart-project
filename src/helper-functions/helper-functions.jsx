@@ -56,3 +56,26 @@ export function changeBtnQty(products, signal, ref, callback) {
 		);
 	}
 }
+
+export async function getInfo(callback) {
+	return fetch(
+		'http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeliner&product_category=pencil',
+	)
+		.then((response) => response.json())
+		.then((response) =>
+			response.filter((item, index) => index != 0 && index != 1),
+		)
+		.then((response) =>
+			callback(
+				response.map((item) => ({
+					ref: item.id,
+					url: item.image_link,
+					name: item.name,
+					brand: item.brand,
+					description: item.description,
+					price: item.price,
+					quantity: 1,
+				})),
+			),
+		);
+}

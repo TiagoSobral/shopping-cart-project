@@ -23,7 +23,7 @@ export function Cards({
 	handleAddCart,
 }) {
 	return (
-		<ul className={styles.cards}>
+		<ul className={styles.cards} data-testid='cards'>
 			{products.map((item) => (
 				<Card
 					item={item}
@@ -39,14 +39,19 @@ export function Cards({
 
 function Card({ item, handleChange, handleItemQty, handleAddCart }) {
 	return (
-		<li className={styles.card} data-ref={item.ref}>
+		<li
+			className={styles.card}
+			data-ref={item.ref}
+			data-type='shop'
+			data-testid='card'
+		>
 			<h1 className={`${styles.cardTitle} ${styles.InputNCartBtn}`}>
 				{item.name}
 			</h1>
 			<img src={item.url} alt='' className={styles.img} />
 			<input
 				type='tel'
-				className={`${styles.InputNCartBtn} ${styles.cardTitle}`}
+				className={`${styles.InputNCartBtn} ${styles.inputField}`}
 				value={item.quantity}
 				onChange={handleChange}
 			/>

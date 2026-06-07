@@ -6,10 +6,11 @@ import ShopPage from './shop-page/ShopPage.jsx';
 import CartPage from './cart-page/CartPage.jsx';
 import Banner from './banner/Banner.jsx';
 import NavigationBar from './navigation-bar/NavigationBar.jsx';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import {
 	addCart,
 	changeBtnQty,
+	getInfo,
 } from '../helper-functions/helper-functions.jsx';
 import { Outlet } from 'react-router';
 
@@ -17,28 +18,29 @@ export default function App() {
 	const [products, setProducts] = useState(null);
 	const [cartItems, setCartItems] = useState(null);
 
-	useEffect(() => {
-		fetch(
-			'http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeliner&product_category=pencil',
-		)
-			.then((response) => response.json())
-			.then((response) =>
-				response.filter((item, index) => index != 0 && index != 1),
-			)
-			.then((response) =>
-				setProducts(
-					response.map((item) => ({
-						ref: item.id,
-						url: item.image_link,
-						name: item.name,
-						brand: item.brand,
-						description: item.description,
-						price: item.price,
-						quantity: 1,
-					})),
-				),
-			);
-	}, []);
+	getInfo(setProducts);
+	// useEffect(() => {
+	// 	fetch(
+	// 		'http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeliner&product_category=pencil',
+	// 	)
+	// 		.then((response) => response.json())
+	// 		.then((response) =>
+	// 			response.filter((item, index) => index != 0 && index != 1),
+	// 		)
+	// 		.then((response) =>
+	// 			setProducts(
+	// 				response.map((item) => ({
+	// 					ref: item.id,
+	// 					url: item.image_link,
+	// 					name: item.name,
+	// 					brand: item.brand,
+	// 					description: item.description,
+	// 					price: item.price,
+	// 					quantity: 1,
+	// 				})),
+	// 			),
+	// 		);
+	// }, []);
 
 	function handleItemQty(e) {
 		let type = e.target.parentElement.dataset.type;
