@@ -58,7 +58,7 @@ export function changeBtnQty(products, signal, ref, callback) {
 }
 
 export async function getInfo(callback) {
-	return fetch(
+	return await fetch(
 		'http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeliner&product_category=pencil',
 	)
 		.then((response) => response.json())
