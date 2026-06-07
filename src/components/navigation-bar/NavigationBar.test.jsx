@@ -38,7 +38,7 @@ describe('Navigation Bar', () => {
 		expect(cartBtn).toBeInTheDocument();
 	});
 
-	it('Images are rendered', async () => {
+	it('products are rendered', async () => {
 		const products = [
 			{
 				ref: 'da123',

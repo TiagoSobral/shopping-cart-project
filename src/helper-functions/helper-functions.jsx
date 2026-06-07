@@ -63,9 +63,6 @@ export async function getInfo(callback) {
 	)
 		.then((response) => response.json())
 		.then((response) =>
-			response.filter((item, index) => index != 0 && index != 1),
-		)
-		.then((response) =>
 			callback(
 				response.map((item) => ({
 					ref: item.id,
