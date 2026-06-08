@@ -1,13 +1,12 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import NavigationBar from './NavigationBar';
-// import userEvent from '@testing-library/user-event';
 import ShopPage from '../shop-page/ShopPage';
 import App from '../App';
 import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router';
 import { routes } from '../../routes.jsx';
 import userEvent from '@testing-library/user-event';
-// import { createRoot } from 'react-dom/client';
+import { route } from '../../helper-functions/helper-functions.jsx';
 
 const products = [
 	{
@@ -22,12 +21,12 @@ const products = [
 ];
 
 window.fetch = vi.fn(() => Promise.resolve({ json: () => products }));
-const route = createMemoryRouter(routes, {
-	initialEntries: ['/'],
-});
 
 describe('Navigation Bar', () => {
 	it('navigation bar component is rendered', () => {
+		const route = createMemoryRouter(routes, {
+			initialEntries: ['/'],
+		});
 		render(<RouterProvider router={route} />);
 
 		const nav = screen.getByRole('navigation');
@@ -36,6 +35,9 @@ describe('Navigation Bar', () => {
 	});
 
 	it('renders 3 buttons', () => {
+		const route = createMemoryRouter(routes, {
+			initialEntries: ['/'],
+		});
 		render(<RouterProvider router={route} />);
 
 		const productsBtn = screen.getByRole('button', { name: 'PRODUCTS' });
@@ -48,6 +50,9 @@ describe('Navigation Bar', () => {
 	});
 
 	it('products are rendered', async () => {
+		const route = createMemoryRouter(routes, {
+			initialEntries: ['/'],
+		});
 		await render(<RouterProvider router={route} />);
 
 		const user = userEvent.setup();
@@ -64,7 +69,6 @@ describe('Navigation Bar', () => {
 		const route = createMemoryRouter(routes, {
 			initialEntries: ['/'],
 		});
-
 		await render(<RouterProvider router={route} />);
 
 		const user = userEvent.setup();
@@ -89,7 +93,6 @@ describe('Navigation Bar', () => {
 		const route = createMemoryRouter(routes, {
 			initialEntries: ['/'],
 		});
-
 		await render(<RouterProvider router={route} />);
 
 		const user = userEvent.setup();
@@ -106,5 +109,4 @@ describe('Navigation Bar', () => {
 });
 
 /* Tests: 
-- check if input field can be changed
 - check when add product to cart if cart button becomes a number */
