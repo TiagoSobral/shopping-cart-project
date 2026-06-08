@@ -1,6 +1,6 @@
 // import styles from './App.module.css';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HomePage from './homepage/Homepage.jsx';
 import ShopPage from './shop-page/ShopPage.jsx';
 import CartPage from './cart-page/CartPage.jsx';
@@ -18,29 +18,9 @@ export default function App() {
 	const [products, setProducts] = useState(null);
 	const [cartItems, setCartItems] = useState(null);
 
-	getInfo(setProducts);
-	// useEffect(() => {
-	// 	fetch(
-	// 		'http://makeup-api.herokuapp.com/api/v1/products.json?product_type=eyeliner&product_category=pencil',
-	// 	)
-	// 		.then((response) => response.json())
-	// 		.then((response) =>
-	// 			response.filter((item, index) => index != 0 && index != 1),
-	// 		)
-	// 		.then((response) =>
-	// 			setProducts(
-	// 				response.map((item) => ({
-	// 					ref: item.id,
-	// 					url: item.image_link,
-	// 					name: item.name,
-	// 					brand: item.brand,
-	// 					description: item.description,
-	// 					price: item.price,
-	// 					quantity: 1,
-	// 				})),
-	// 			),
-	// 		);
-	// }, []);
+	useEffect(() => {
+		getInfo(setProducts);
+	}, []);
 
 	function handleItemQty(e) {
 		let type = e.target.parentElement.dataset.type;

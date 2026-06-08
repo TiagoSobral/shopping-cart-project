@@ -9,13 +9,25 @@ import { routes } from '../../routes.jsx';
 import userEvent from '@testing-library/user-event';
 // import { createRoot } from 'react-dom/client';
 
+const products = [
+	{
+		ref: 'da123',
+		url: 'url_test',
+		name: 'name_test',
+		brand: 'brand_test',
+		description: 'description_test',
+		price: 20,
+		quantity: 1,
+	},
+];
+
+window.fetch = vi.fn(() => Promise.resolve({ json: () => products }));
+const route = createMemoryRouter(routes, {
+	initialEntries: ['/'],
+});
+
 describe('Navigation Bar', () => {
 	it('navigation bar component is rendered', () => {
-		const route = createMemoryRouter(routes, {
-			initialEntries: ['/', '/shoppage'],
-			initialIndex: 0,
-		});
-
 		render(<RouterProvider router={route} />);
 
 		const nav = screen.getByRole('navigation');
@@ -24,9 +36,6 @@ describe('Navigation Bar', () => {
 	});
 
 	it('renders 3 buttons', () => {
-		const route = createMemoryRouter(routes, {
-			initialEntries: ['/'],
-		});
 		render(<RouterProvider router={route} />);
 
 		const productsBtn = screen.getByRole('button', { name: 'PRODUCTS' });
@@ -39,26 +48,9 @@ describe('Navigation Bar', () => {
 	});
 
 	it('products are rendered', async () => {
-		const products = [
-			{
-				ref: 'da123',
-				url: 'url_test',
-				name: 'name_test',
-				brand: 'brand_test',
-				description: 'description_test',
-				price: 20,
-				quantity: 1,
-			},
-		];
-
-		window.fetch = vi.fn(() => Promise.resolve({ json: () => products }));
-
-		const route = await createMemoryRouter(routes, {
-			initialEntries: ['/'],
-		});
 		await render(<RouterProvider router={route} />);
-		const user = userEvent.setup();
 
+		const user = userEvent.setup();
 		const productsBtn = screen.getByRole('link', { name: 'PRODUCTS' });
 
 		await user.click(productsBtn);
@@ -68,22 +60,32 @@ describe('Navigation Bar', () => {
 		expect(card).toBeInTheDocument();
 	});
 
-	/* 	it('Input changes with increase & decrease', async () => {
-		render(<RouterProvider router={route} />);
+	it('Input changes with increase & decrease', async () => {
+		const route = createMemoryRouter(routes, {
+			initialEntries: ['/'],
+		});
+
+		await render(<RouterProvider router={route} />);
+
 		const user = userEvent.setup();
 
-		await user.click(screen.getByRole('button', { name: 'PRODUCTS' }));
+		const productsBtn = screen.getByRole('link', { name: 'PRODUCTS' });
 
-		const inputField = screen.getAllByRole('textbox')[0];
+		await user.click(productsBtn);
 
-		await user.click(screen.getAllByRole('button', { name: '+' })[0]);
+		const plusBtn = screen.getByRole('button', { name: '+' });
+		const minusBtn = screen.getByRole('button', { name: '-' });
 
-		expect(inputField.textContent).toEqual(1);
-	}); */
+		await user.click(plusBtn);
+		await user.click(plusBtn);
+		await user.click(minusBtn);
+
+		const inputField = screen.getByRole('textbox');
+
+		expect(inputField.value).toEqual('2');
+	});
 });
 
 /* Tests: 
-- check if products show up in main
-- check increment and decrement on input field
 - check if input field can be changed
 - check when add product to cart if cart button becomes a number */
