@@ -60,7 +60,7 @@ describe('Navigation Bar', () => {
 		expect(card).toBeInTheDocument();
 	});
 
-	it('Input changes with increase & decrease', async () => {
+	it('input changes with increase & decrease', async () => {
 		const route = createMemoryRouter(routes, {
 			initialEntries: ['/'],
 		});
@@ -81,6 +81,25 @@ describe('Navigation Bar', () => {
 		await user.click(minusBtn);
 
 		const inputField = screen.getByRole('textbox');
+
+		expect(inputField.value).toEqual('2');
+	});
+
+	it('input can changed by user without buttons', async () => {
+		const route = createMemoryRouter(routes, {
+			initialEntries: ['/'],
+		});
+
+		await render(<RouterProvider router={route} />);
+
+		const user = userEvent.setup();
+		const productsBtn = screen.getByRole('link', { name: 'PRODUCTS' });
+
+		await user.click(productsBtn);
+
+		const inputField = screen.getByRole('textbox');
+
+		await user.type(inputField, '{backspace}2');
 
 		expect(inputField.value).toEqual('2');
 	});
