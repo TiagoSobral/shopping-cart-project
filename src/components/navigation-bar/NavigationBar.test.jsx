@@ -6,12 +6,11 @@ import App from '../App';
 import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router';
 import { routes } from '../../routes.jsx';
 import userEvent from '@testing-library/user-event';
-import { route } from '../../helper-functions/helper-functions.jsx';
 
 const products = [
 	{
-		ref: 'da123',
-		url: 'url_test',
+		id: 'da123',
+		image_link: 'url_test',
 		name: 'name_test',
 		brand: 'brand_test',
 		description: 'description_test',
@@ -20,7 +19,9 @@ const products = [
 	},
 ];
 
-window.fetch = vi.fn(() => Promise.resolve({ json: () => products }));
+globalThis.fetch = vi.fn(
+	async () => await Promise.resolve({ json: () => products }),
+);
 
 describe('Navigation Bar', () => {
 	it('navigation bar component is rendered', () => {
@@ -91,14 +92,13 @@ describe('Navigation Bar', () => {
 
 	it('input can changed by user without buttons', async () => {
 		const route = createMemoryRouter(routes, {
-			initialEntries: ['/'],
+			initialEntries: ['/shoppage'],
+			initialIndex: 1,
 		});
+
 		await render(<RouterProvider router={route} />);
 
 		const user = userEvent.setup();
-		const productsBtn = screen.getByRole('link', { name: 'PRODUCTS' });
-
-		await user.click(productsBtn);
 
 		const inputField = screen.getByRole('textbox');
 

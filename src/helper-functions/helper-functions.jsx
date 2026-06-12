@@ -15,7 +15,7 @@ export function isDecreaseZero(quantity) {
 }
 
 export function addCart(cart, item) {
-	if (cart === null) {
+	if (cart.length === 0) {
 		return [item];
 	} else {
 		let itemInCart = cart.find((element) => element.ref == item.ref);
