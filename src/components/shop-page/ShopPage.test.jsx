@@ -4,90 +4,99 @@ import userEvent from '@testing-library/user-event';
 import { Cards } from './ShopPage';
 import ShopPage from './ShopPage';
 import App from '../App';
+import { createMemoryRouter, RouterProvider } from 'react-router';
+import { routes } from '../../routes';
 
-describe('Product Quantity Buttons', () => {
-	const items = [
-		{
-			ref: '1234',
-			url: 'bla',
-			name: 'Brush',
-			quantity: 3,
-			description: 'a beautiful brush 2mm',
-			price: 12.0,
-		},
-	];
+const products = [
+	{
+		id: 'da123',
+		image_link: 'url_test',
+		name: 'name_test',
+		brand: 'brand_test',
+		description: 'description_test',
+		price: 20,
+		quantity: 1,
+	},
+];
 
-	it('handleItemQty gets called when increment or decrement clicked', async () => {
+globalThis.fetch = vi.fn(
+	async () => await Promise.resolve({ json: () => products }),
+);
+
+describe('Shop page', () => {
+	it('products are rendered', async () => {
+		const route = createMemoryRouter(routes, {
+			initialEntries: ['/'],
+		});
+		await render(<RouterProvider router={route} />);
+
 		const user = userEvent.setup();
-		const handleItemQty = vi.fn();
-
-		render(<ShopPage products={items} handleItemQty={handleItemQty} />);
-
-		const incrementBtn = screen.getByRole('button', { name: '+' });
-		const decrementBtn = screen.getByRole('button', { name: '-' });
-
-		await user.click(incrementBtn);
-		await user.click(decrementBtn);
-
-		expect(handleItemQty).toHaveBeenCalledTimes(2);
-	});
-
-	it('handleChange gets called when user changes input number', async () => {
-		const user = userEvent.setup();
-		const handleChange = vi.fn();
-
-		render(<ShopPage products={items} handleChange={handleChange} />);
-
-		const input = screen.getByRole('textbox');
-
-		await user.type(input, '2');
-
-		expect(handleChange).toHaveBeenCalled();
-	});
-
-	it('handleAddCart gets called when cart button gets clicked', async () => {
-		const user = userEvent.setup();
-		const handleAddCart = vi.fn();
-
-		render(<ShopPage products={items} handleAddCart={handleAddCart} />);
-
-		const addCart = screen.getByRole('button', { name: /Add to Cart/i });
-
-		await user.click(addCart);
-
-		expect(handleAddCart).toHaveBeenCalled();
-	});
-
-	it('changes item quantity when user types', async () => {
-		const user = userEvent.setup();
-
-		render(<App />);
-
-		const productsBtn = screen.getByTestId('productsBtn');
+		const productsBtn = screen.getByRole('link', { name: 'PRODUCTS' });
 
 		await user.click(productsBtn);
 
-		const input = screen.getAllByRole('textbox')[0];
+		const card = screen.getByTestId('card');
 
-		await user.type(input, '{backspace}2');
-
-		expect(input.value).toEqual('2');
+		expect(card).toBeInTheDocument();
 	});
 
-	it('it increments by one when user clicks +', async () => {
+	it('input changes with increase & decrease', async () => {
+		const route = createMemoryRouter(routes, {
+			initialEntries: ['/'],
+		});
+		await render(<RouterProvider router={route} />);
+
 		const user = userEvent.setup();
 
-		render(<App />);
-
-		const productsBtn = screen.getByTestId('productsBtn');
+		const productsBtn = screen.getByRole('link', { name: 'PRODUCTS' });
 
 		await user.click(productsBtn);
 
-		const input = screen.getAllByRole('textbox')[0];
-		const incrementBtn = screen.getAllByRole('button', { name: '+' })[0];
+		const plusBtn = screen.getByRole('button', { name: '+' });
+		const minusBtn = screen.getByRole('button', { name: '-' });
 
-		await user.click(incrementBtn);
+		await user.click(plusBtn);
+		await user.click(plusBtn);
+		await user.click(minusBtn);
 
-		expect(input.value).toEqual('4');
+		const inputField = screen.getByRole('textbox');
+
+		expect(inputField.value).toEqual('2');
+	});
+
+	it('input can changed by user without buttons', async () => {
+		const route = createMemoryRouter(routes, {
+			initialEntries: ['/shoppage'],
+			initialIndex: 1,
+		});
+
+		await render(<RouterProvider router={route} />);
+
+		const user = userEvent.setup();
+
+		const inputField = await screen.findByRole('textbox');
+
+		await user.type(inputField, '{backspace}2');
+
+		expect(inputField.value).toEqual('2');
+	});
+
+	it('item gets added to cart', async () => {
+		const route = createMemoryRouter(routes, {
+			initialEntries: ['/shoppage'],
+			initialIndex: 1,
+		});
+
+		await render(<RouterProvider router={route} />);
+
+		const user = userEvent.setup();
+
+		const addCartBtn = await screen.findByRole('button', { name: 'Add to Cart' });
+
+		const cartBtn = await screen.findByRole('button', { name: 'CART' });
+
+		await user.click(addCartBtn);
+
+		expect(cartBtn.textContent).toEqual('1');
 	});
 });

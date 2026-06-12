@@ -49,63 +49,6 @@ describe('Navigation Bar', () => {
 		expect(homeBtn).toBeInTheDocument();
 		expect(cartBtn).toBeInTheDocument();
 	});
-
-	it('products are rendered', async () => {
-		const route = createMemoryRouter(routes, {
-			initialEntries: ['/'],
-		});
-		await render(<RouterProvider router={route} />);
-
-		const user = userEvent.setup();
-		const productsBtn = screen.getByRole('link', { name: 'PRODUCTS' });
-
-		await user.click(productsBtn);
-
-		const card = screen.getByTestId('card');
-
-		expect(card).toBeInTheDocument();
-	});
-
-	it('input changes with increase & decrease', async () => {
-		const route = createMemoryRouter(routes, {
-			initialEntries: ['/'],
-		});
-		await render(<RouterProvider router={route} />);
-
-		const user = userEvent.setup();
-
-		const productsBtn = screen.getByRole('link', { name: 'PRODUCTS' });
-
-		await user.click(productsBtn);
-
-		const plusBtn = screen.getByRole('button', { name: '+' });
-		const minusBtn = screen.getByRole('button', { name: '-' });
-
-		await user.click(plusBtn);
-		await user.click(plusBtn);
-		await user.click(minusBtn);
-
-		const inputField = screen.getByRole('textbox');
-
-		expect(inputField.value).toEqual('2');
-	});
-
-	it('input can changed by user without buttons', async () => {
-		const route = createMemoryRouter(routes, {
-			initialEntries: ['/shoppage'],
-			initialIndex: 1,
-		});
-
-		await render(<RouterProvider router={route} />);
-
-		const user = userEvent.setup();
-
-		const inputField = screen.getByRole('textbox');
-
-		await user.type(inputField, '{backspace}2');
-
-		expect(inputField.value).toEqual('2');
-	});
 });
 
 /* Tests: 
