@@ -15,8 +15,8 @@ import {
 import { Outlet } from 'react-router';
 
 export default function App() {
-	const [products, setProducts] = useState(null);
-	const [cartItems, setCartItems] = useState(null);
+	const [products, setProducts] = useState([]);
+	const [cartItems, setCartItems] = useState([]);
 
 	useEffect(() => {
 		getInfo(setProducts);
