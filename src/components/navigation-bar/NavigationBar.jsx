@@ -2,10 +2,12 @@ import styles from './NavigationBar.module.css';
 import { Link } from 'react-router';
 
 function NavigationBar({ cartItems }) {
-	let cartQuantity = 0;
-	if (cartItems != null) {
-		cartQuantity = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
-	}
+	let cartQuantity = cartItems.reduce(
+		(acc, curr) => acc + Number(curr.quantity),
+		0,
+	);
+
+	console.log(cartQuantity);
 
 	return (
 		<nav className={styles.navigationBanner}>
