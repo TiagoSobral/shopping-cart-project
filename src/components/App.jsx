@@ -1,12 +1,9 @@
-// import styles from './App.module.css';
-
 import { useEffect, useState } from 'react';
 import HomePage from './homepage/Homepage.jsx';
 import ShopPage from './shop-page/ShopPage.jsx';
 import CartPage from './cart-page/CartPage.jsx';
 import Banner from './banner/Banner.jsx';
 import NavigationBar from './navigation-bar/NavigationBar.jsx';
-// import { useEffect } from 'react';
 import {
 	addCart,
 	changeBtnQty,
@@ -24,17 +21,22 @@ export default function App() {
 
 	function handleItemQty(e) {
 		let type = e.target.parentElement.dataset.type;
-		const ref = e.target.parentElement.dataset.ref;
+		let ref = e.target.parentElement.dataset.ref;
 		const quantity = e.target.textContent;
+
+		if (ref == undefined) {
+			ref = e.target.parentElement.parentElement.dataset.ref;
+			type = e.target.parentElement.parentElement.dataset.type;
+		}
 
 		type === 'shop'
 			? changeBtnQty(products, quantity, ref, setProducts)
-			: changeBtnQty(products, quantity, ref, setCartItems);
+			: changeBtnQty(cartItems, quantity, ref, setCartItems);
 	}
 
 	function handleChange(e) {
 		let ref = e.target.parentElement.dataset.ref;
-		const type = e.target.parentElement.dataset.type;
+		let type = e.target.parentElement.dataset.type;
 		const quantity = e.target.value;
 
 		if (type === 'shop') {
