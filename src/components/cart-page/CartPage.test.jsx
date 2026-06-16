@@ -65,7 +65,7 @@ describe('Cart Page', () => {
 		const decrement = await screen.findByRole('button', { name: '-' });
 
 		await user.click(increment);
-		await user.click(increment);
+		await user.click(decrement);
 
 		expect(input.value).toEqual('1');
 	});
