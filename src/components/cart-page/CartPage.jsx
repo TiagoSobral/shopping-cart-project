@@ -20,11 +20,15 @@ function Cart({ cartItems, handleChange, handleItemQty }) {
 		<>
 			<h1>Order Summary</h1>
 			<section>
-				<Items
-					cartItems={cartItems}
-					handleChange={handleChange}
-					handleItemQty={handleItemQty}
-				/>
+				{cartItems.length === 0 ? (
+					<h2>Nothing to see here!</h2>
+				) : (
+					<Items
+						cartItems={cartItems}
+						handleChange={handleChange}
+						handleItemQty={handleItemQty}
+					/>
+				)}
 			</section>
 		</>
 	);
